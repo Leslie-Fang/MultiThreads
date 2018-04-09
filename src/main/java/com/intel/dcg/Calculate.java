@@ -1,5 +1,5 @@
 package com.intel.dcg;
 
 public interface Calculate {
-    int cal(int a);
+    public int cal(int a);
 }

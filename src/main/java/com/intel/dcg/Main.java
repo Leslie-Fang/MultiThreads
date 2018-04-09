@@ -25,5 +25,10 @@ public class Main {
 
         InnerClass innerClass = new Main().new InnerClass("leslie");
         System.out.println(innerClass.getName());
+        System.out.println(new Calculate(){
+            public int cal(int a){
+                return a+1;
+            }
+        }.cal(10));
     }
 }
