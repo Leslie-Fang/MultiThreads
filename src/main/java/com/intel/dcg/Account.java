@@ -9,7 +9,6 @@ public class Account {
     Account(String accountNO,int balance){
         this.balance = balance;
         this.accountNO = accountNO;
-
     }
     synchronized int add(){
         return ++balance;
@@ -17,7 +16,8 @@ public class Account {
     synchronized int getAccount(){
         return this.balance;
     }
-    int drawMoney(int number){
-        return this.balance - number;
+    synchronized int drawMoney(int number){
+        this.balance -= number;
+        return this.balance;
     }
 }

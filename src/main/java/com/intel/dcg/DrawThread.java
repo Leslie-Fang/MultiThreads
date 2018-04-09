@@ -6,15 +6,28 @@ public class DrawThread extends Thread{
         super(name);
         this.myAccount = myAccount;
     }
-    void drawMoney(int number){
-        if(number<=this.myAccount.getAccount()){
-            this.myAccount.drawMoney(number);
-            System.out.println("Draw Money Successfully!");
-        }else{
-            System.out.println("Failed,Lack of  Money!");
+    boolean drawMoney(int number){
+        boolean res=false;
+        synchronized(this){
+            if(number<=this.myAccount.getAccount()){
+                int bankLeft = this.myAccount.drawMoney(number);
+                System.out.println(Thread.currentThread().getName()+": Draw Money Successfully! Left:"+bankLeft);
+                res =  true;
+            }else{
+                System.out.println("Failed,Lack of Money!");
+                res = false;
+            }
+        }
+        return res;
+    }
+    public void run(){
+        while(drawMoney(10)){
+            try{
+                sleep(100);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+
         }
     }
-//    public void run(){
-//        drawMoney
-//    }
 }
