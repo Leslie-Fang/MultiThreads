@@ -6,8 +6,16 @@ public class SecondThread implements Runnable{
         this.i = 0;
     }
     public void run(){
-        for(this.i=0;i<10;i++){
-            System.out.println(Thread.currentThread().getName()+" "+i);
+        while(i<10){
+            synchronized(this){
+                System.out.println(Thread.currentThread().getName()+" "+i);
+                ++this.i;
+            }
+            try{
+                Thread.currentThread().sleep(10);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
         }
     }
 }

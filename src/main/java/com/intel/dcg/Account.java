@@ -1,15 +1,23 @@
 package com.intel.dcg;
 
 public class Account {
-    int account;
-    {
-        account=0;
+    private String accountNO;
+    private int balance;
+    Account(){
+        this.balance = 0;
+    }
+    Account(String accountNO,int balance){
+        this.balance = balance;
+        this.accountNO = accountNO;
+
     }
     synchronized int add(){
-        return ++account;
-        //return this.getAccount();
+        return ++balance;
     }
     synchronized int getAccount(){
-        return this.account;
+        return this.balance;
+    }
+    int drawMoney(int number){
+        return this.balance - number;
     }
 }
