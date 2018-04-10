@@ -36,7 +36,10 @@ public class Main {
 //        DrawThread myDrawThread2 = new DrawThread("Thread2",myAccount1);
 //        myDrawThread.start();
 //        myDrawThread2.start();
-
+        DBConfig dbConfig = new DBConfig();
+        Account myAccount1 = new Account("leslie", 100,dbConfig);
+        myAccount1.drawMoneyFromDB(10,"leslie");
+        myAccount1.lookupBalance("leslie");
 
     }
 }
