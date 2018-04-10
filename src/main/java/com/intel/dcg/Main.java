@@ -38,8 +38,10 @@ public class Main {
 //        myDrawThread2.start();
         DBConfig dbConfig = new DBConfig();
         Account myAccount1 = new Account("leslie", 100,dbConfig);
-        myAccount1.drawMoneyFromDB(10,"leslie");
-        myAccount1.lookupBalance("leslie");
+        TradeHistory myTradeHistory = new TradeHistory(dbConfig);
+       // myAccount1.drawMoneyFromDB(-10,"leslie");
+        myTradeHistory.insertHistory(-10,"leslie","mango");
+        //myAccount1.lookupBalance("leslie");
 
     }
 }

@@ -37,33 +37,11 @@ public class Account {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
             conn.setAutoCommit(false);
-            try(PreparedStatement ps = conn.prepareStatement( "update userAccount SET balance = balance - ? where name = ?" ))
-            {
-                ps.setInt(1, number);
-                ps.setString(2, buyer);
-                ps.executeUpdate();
-                //System.out.println(ps.executeUpdate());
-            }
-            conn.commit();
-            conn.close();
-
-        }catch(ClassNotFoundException ex){
-            ex.printStackTrace();
-        }catch(SQLException ex){
-            ex.printStackTrace();
-        }
-    }
-    public void saveMoneyFromDB(int number,String buyer){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
-            conn.setAutoCommit(false);
             try(PreparedStatement ps = conn.prepareStatement( "update userAccount SET balance = balance + ? where name = ?" ))
             {
                 ps.setInt(1, number);
                 ps.setString(2, buyer);
                 ps.executeUpdate();
-                //System.out.println(ps.executeUpdate());
             }
             conn.commit();
             conn.close();
