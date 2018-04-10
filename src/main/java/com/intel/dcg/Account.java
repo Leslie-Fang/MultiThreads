@@ -36,7 +36,7 @@ public class Account {
     public String getAccountName(){
         return this.accountName;
     }
-    public void drawMoneyFromDB(int number){
+    public synchronized void drawMoneyFromDB(int number){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
@@ -49,7 +49,6 @@ public class Account {
             }
             conn.commit();
             conn.close();
-
         }catch(ClassNotFoundException ex){
             ex.printStackTrace();
         }catch(SQLException ex){
@@ -77,7 +76,7 @@ public class Account {
             ex.printStackTrace();
         }
     }
-//    public void transferMoney(String buyer){
+//    public void transferMoney(int number,String target){
 //        try {
 //            Class.forName("com.mysql.jdbc.Driver");
 //            Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
