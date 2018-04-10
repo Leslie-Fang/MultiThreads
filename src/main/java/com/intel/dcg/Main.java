@@ -39,9 +39,11 @@ public class Main {
         DBConfig dbConfig = new DBConfig();
         Account myAccount1 = new Account("leslie", 100,dbConfig);
         TradeHistory myTradeHistory = new TradeHistory(dbConfig);
-       // myAccount1.drawMoneyFromDB(-10,"leslie");
-        myTradeHistory.insertHistory(-10,"leslie","mango");
-        //myAccount1.lookupBalance("leslie");
+        myAccount1.drawMoneyFromDB(-10);
+        myTradeHistory.insertHistory(-10,myAccount1.getAccountName());
+        myAccount1.lookupBalance();
+
+        //myTradeHistory.insertHistory(-10,"leslie","mango");
 
     }
 }

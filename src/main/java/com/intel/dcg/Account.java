@@ -3,19 +3,20 @@ package com.intel.dcg;
 import java.sql.*;
 
 public class Account {
-    private String accountNO;
+    private String accountName;
     private int balance;
     private DBConfig dbConfig;
+
     Account(){
         this.balance = 0;
     }
-    Account(String accountNO,int balance){
+    Account(String accountName,int balance){
         this.balance = balance;
-        this.accountNO = accountNO;
+        this.accountName = accountName;
     }
-    Account(String accountNO,int balance,DBConfig dbConfig){
+    Account(String accountName,int balance,DBConfig dbConfig){
         this.balance = balance;
-        this.accountNO = accountNO;
+        this.accountName = accountName;
         this.dbConfig = dbConfig;
     }
     synchronized int add(){
@@ -32,7 +33,10 @@ public class Account {
             return false;
         }
     }
-    public void drawMoneyFromDB(int number,String buyer){
+    public String getAccountName(){
+        return this.accountName;
+    }
+    public void drawMoneyFromDB(int number){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
@@ -40,7 +44,7 @@ public class Account {
             try(PreparedStatement ps = conn.prepareStatement( "update userAccount SET balance = balance + ? where name = ?" ))
             {
                 ps.setInt(1, number);
-                ps.setString(2, buyer);
+                ps.setString(2, this.accountName);
                 ps.executeUpdate();
             }
             conn.commit();
@@ -52,17 +56,17 @@ public class Account {
             ex.printStackTrace();
         }
     }
-    public void lookupBalance(String name){
+    public void lookupBalance(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
             conn.setAutoCommit(false);
             try(PreparedStatement ps = conn.prepareStatement( "select balance from userAccount where name = ?" ))
             {
-                ps.setString(1, name);
+                ps.setString(1, this.accountName);
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
-                    System.out.println(name+"'s bank balance is: "+rs.getInt(1));
+                    System.out.println(this.accountName+"'s bank balance is: "+rs.getInt(1));
                 }
             }
             conn.commit();
@@ -73,4 +77,25 @@ public class Account {
             ex.printStackTrace();
         }
     }
+//    public void transferMoney(String buyer){
+//        try {
+//            Class.forName("com.mysql.jdbc.Driver");
+//            Connection conn = DriverManager.getConnection(this.dbConfig.getUrl(), this.dbConfig.getName(), this.dbConfig.getPassword());
+//            conn.setAutoCommit(false);
+//            try(PreparedStatement ps = conn.prepareStatement( "select balance from userAccount where name = ?" ))
+//            {
+//                ps.setString(1, name);
+//                ResultSet rs = ps.executeQuery();
+//                while(rs.next()){
+//                    System.out.println(name+"'s bank balance is: "+rs.getInt(1));
+//                }
+//            }
+//            conn.commit();
+//            conn.close();
+//        }catch(ClassNotFoundException ex){
+//            ex.printStackTrace();
+//        }catch(SQLException ex){
+//            ex.printStackTrace();
+//        }
+//    }
 }
