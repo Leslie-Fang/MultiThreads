@@ -16,8 +16,12 @@ public class Account {
     synchronized int getAccount(){
         return this.balance;
     }
-    synchronized int drawMoney(int number){
-        this.balance -= number;
-        return this.balance;
+    synchronized boolean drawMoney(int number){
+        if(number<=this.balance){
+            this.balance -= number;
+            return true;
+        }else{
+            return false;
+        }
     }
 }
